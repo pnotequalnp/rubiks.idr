@@ -1,0 +1,8 @@
+package test
+
+depends = rubiks
+
+modules = Test
+main = Test
+
+executable = test

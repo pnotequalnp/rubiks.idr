@@ -1,0 +1,20 @@
+package rubiks
+
+modules = Main
+        , Data.Graph
+        , Data.Graph.Cayley
+        , Data.Group
+        , Data.Group.Cyclic
+        , Data.Group.Permutation
+        , Data.Group.Permutation.Vect
+        , Data.Groupoid
+        , Data.Vect.Extra
+        , Rubiks
+
+main = Main
+
+depends = contrib, elab-util, sop
+
+executable = rubiks
+
+sourcedir = "src"
