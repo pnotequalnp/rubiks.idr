@@ -31,14 +31,14 @@ Semigroup (PVect n) where
   p <+> q = record { permutation $= permute q } p
 
 public export
-(n : Nat) => Monoid (PVect n) where
+{n : Nat} -> Monoid (PVect n) where
   neutral = MkPVect idVect
 
 public export
-(n : Nat) => Group (PVect n) where
-  inverse = ?inverse
+{n : Nat} -> Group (PVect n) where
+  inverse = id -- TODO
 
 public export
-(n : Nat) => Permutation PVect n where
+{n : Nat} -> Permutation PVect n where
   permute = Data.Group.Permutation.Vect.permute
   asVect = permutation
