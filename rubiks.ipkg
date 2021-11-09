@@ -1,7 +1,6 @@
 package rubiks
 
 modules = Main
-        , Data.Enum
         , Data.Graph
         , Data.Graph.Cayley
         , Data.Group

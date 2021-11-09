@@ -1,45 +1,47 @@
 module Data.Group.Generics
 
-import Generics.Derive
 import Data.Group
+import Data.SOP
+import Generics.Derive
 
 %default total
-%language ElabReflection
+
+public export %hint
+groupToMonoidNP : NP (Group . f) ks -> NP (Monoid . f) ks
+groupToMonoidNP = mapNP (\_ => materialize Monoid)
 
 public export
-Monoid (NP f ks) => NP (Group . f) ks => Group (NP f ks) where
-  inverse = hcmap (Group . f) inverse
+(all : NP (Group . f) ks) => Group (NP_ k f ks) where
+  inverse {all = []}     []       = []
+  inverse {all = _ :: _} (h :: t) = inverse h :: inverse t
+
+public export %hint
+groupToMonoidPOP : POP (Group . f) kss -> POP (Monoid . f) kss
+groupToMonoidPOP = mapPOP (\_ => materialize Monoid)
 
 public export
-Monoid (NS f ks) => NP (Group . f) ks => Group (NS f ks) where
-  inverse = hcmap (Group . f) inverse
+POP (Group . f) kss => Group (POP_ k f kss) where
+  inverse (MkPOP np) = MkPOP $ inverse np
 
 public export
-Monoid (POP f kss) => POP (Group . f) kss => Group (POP f kss) where
-  inverse = hcmap (Group . f) inverse
+(all : NP (Group . f) [k']) => Group (NS_ k f [k']) where
+  inverse {all = _ :: _} (Z x) = Z $ inverse x
+  inverse {all = _ :: _} (S _) impossible
 
 public export
-Monoid (SOP f kss) => SOP (Group . f) kss => Group (SOP f kss) where
-  inverse = ?inv
+POP (Group . f) [ks] => Group (SOP_ k f [ks]) where
+  inverse (MkSOP x) = MkSOP $ inverse x
 
 public export
-genInverse : Generic t code
-          => Group (SOP I code)
-          => t -> t
+genInverse : Generic t [ts] => POP Group [ts] => t -> t
 genInverse = to . inverse . from
 
-public export
+export
 GroupVis : Visibility -> DeriveUtil -> InterfaceImpl
 GroupVis vis g = MkInterfaceImpl "Group" vis []
   `(MkGroup genInverse)
   (implementationType `(Group) g)
 
-public export
+export
 Group : DeriveUtil -> InterfaceImpl
 Group = GroupVis Public
-
-record DoubleUnit where
-  constructor MkDouble
-  u1, u2 : ()
-
-%runElab derive "DoubleUnit" [Generic, Semigroup, Monoid, Group]

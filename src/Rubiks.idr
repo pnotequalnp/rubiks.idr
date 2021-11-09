@@ -1,10 +1,10 @@
 module Rubiks
 
-import Data.Enum
 import Data.Graph
 import Data.Graph.Cayley
 import Data.Group
 import Data.List.Lazy
+import Generics.SOP
 import Rubiks.Cube
 import Rubiks.Metric.RUF
 
@@ -17,4 +17,4 @@ scrambled : Cube 3
 scrambled = foldl (<++>) neutral scramble
 
 solution : Maybe (List RUF)
-solution = head' $ ids neutral scrambled 4
+solution = head' $ ids @{cayley} neutral scrambled 4

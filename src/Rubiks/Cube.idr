@@ -1,6 +1,5 @@
 module Rubiks.Cube
 
-import Data.Enum
 import Data.Group
 import Data.Group.Generics
 import Generics.Derive
