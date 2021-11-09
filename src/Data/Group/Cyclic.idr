@@ -15,6 +15,10 @@ record C (n : Nat) where
   0 bounded : LT nat n
 
 public export
+Show (C (S n)) where
+  show x = show x.nat
+
+public export
 Eq (C n) where
   x == y = x.nat == y.nat
 

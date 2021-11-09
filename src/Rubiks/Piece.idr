@@ -18,6 +18,10 @@ record Piece (n : Nat) (o : Nat) where
 %runElab derive "Piece" [Generic, Meta]
 
 public export
+Show (Piece n (S o)) where
+  show p = show p.permutation <+> "\n" <+> show p.orientation
+
+public export
 Eq (Piece n o) where
   MkPiece p1 o1 == MkPiece p2 o2 = p1 == p2 && o1 == o2
 

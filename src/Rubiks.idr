@@ -16,5 +16,6 @@ scramble = [U, R', F2, U']
 scrambled : Cube 3
 scrambled = foldl (<++>) neutral scramble
 
+export
 solution : Maybe (List RUF)
-solution = head' $ ids @{cayley} neutral scrambled 4
+solution = head' $ ids @{cayley} neutral scrambled 8

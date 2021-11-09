@@ -11,6 +11,10 @@ record PVect (n : Nat) where
   constructor MkPVect
   permutation : Vect n (Fin n)
 
+public export
+Show (PVect n) where
+  show p = show p.permutation
+
 permute : PVect n -> Vect n a -> Vect n a
 permute p xs = mapWithIndex go xs
   where

@@ -17,5 +17,9 @@ record Cube (n : Nat) where
 %runElab derive "Cube" [Generic, Meta, Eq, Semigroup, Monoid, Group]
 
 public export
+Show (Cube 3) where
+  show c = show c.corners <+> "\n" <+> show c.edges
+
+public export
 Generate (Piece 8 3) g => Generate (Piece 12 2) g => Generate (Cube n) g where
   c <++> g = MkCube (c.corners <++> g) (c.edges <++> g)
