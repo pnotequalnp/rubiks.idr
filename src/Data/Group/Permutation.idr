@@ -43,19 +43,19 @@ public export
 (::) c = record { cycles $= (c ::) }
 
 public export
-(n : Nat) => Semigroup (Cycles n) where
+{n : Nat} -> Semigroup (Cycles n) where
   (<+>) p = record { cycles $= (p.cycles ++) }
 
 public export
-(n : Nat) => Monoid (Cycles n) where
+{n : Nat} -> Monoid (Cycles n) where
   neutral = MkCycles []
 
 public export
-(n : Nat) => Group (Cycles n) where
+{n : Nat} -> Group (Cycles n) where
   inverse = ?s
 
 public export
-(n : Nat) => Permutation Cycles n where
+{n : Nat} -> Permutation Cycles n where
   permute p xs = foldl (flip cycle) xs p.cycles
   asVect p = permute p idVect
 

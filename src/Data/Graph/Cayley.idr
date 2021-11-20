@@ -10,10 +10,7 @@ import Generics.SOP
 ||| Cayley graph with explicit list of generators.
 public export
 cayley' : Generate g h => List h -> Graph g h
-cayley' generators = MkGraph neighbors
-  where
-  neighbors : g -> LazyList (h, g)
-  neighbors g = (\h => (h, g <++> h)) <$> fromList generators
+cayley' generators = MkGraph $ \g => (\h => (h, g <++> h)) <$> fromList generators
 
 ||| The Cayley graph of a generating set.
 public export %hint

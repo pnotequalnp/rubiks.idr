@@ -7,7 +7,7 @@ import Data.Nat
 
 %default total
 
-||| The cyclic group of order `n` represented as a natural modulo `n`
+||| The cyclic group of order n represented as a natural modulo n
 export
 record C (n : Nat) where
   constructor FromNat
@@ -15,7 +15,7 @@ record C (n : Nat) where
   0 bounded : LT nat n
 
 public export
-Show (C (S n)) where
+Show (C n) where
   show x = show x.nat
 
 public export

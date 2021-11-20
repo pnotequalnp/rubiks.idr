@@ -7,15 +7,15 @@ import Data.Vect.Extra
 %default total
 
 public export
-record PVect (n : Nat) where
-  constructor MkPVect
+record S (n : Nat) where
+  constructor MkS
   permutation : Vect n (Fin n)
 
 public export
-Show (PVect n) where
+Show (S n) where
   show p = show p.permutation
 
-permute : PVect n -> Vect n a -> Vect n a
+permute : S n -> Vect n a -> Vect n a
 permute p xs = mapWithIndex go xs
   where
   go : Fin n -> a -> a
@@ -24,25 +24,28 @@ permute p xs = mapWithIndex go xs
      in index jx xs
 
 public export
-toCycles : PVect n -> Cycles n
+toCycles : S n -> Cycles n
 
 public export
-Eq (PVect n) where
+Eq (S n) where
   (==) = (==) `on` permutation
 
 public export
-Semigroup (PVect n) where
+Semigroup (S n) where
   p <+> q = record { permutation $= permute q } p
 
 public export
-{n : Nat} -> Monoid (PVect n) where
-  neutral = MkPVect idVect
+{n : Nat} -> Monoid (S n) where
+  neutral = MkS idVect
 
 public export
-{n : Nat} -> Group (PVect n) where
-  inverse = id -- TODO
+{n : Nat} -> Group (S n) where
+  inverse p = MkS $ ?s
+  where
+    indices : Vect n (Fin n)
+    indices = mapWithIndex (\i, j => ?r) p.permutation
 
 public export
-{n : Nat} -> Permutation PVect n where
+{n : Nat} -> Permutation S n where
   permute = Data.Group.Permutation.Vect.permute
   asVect = permutation
