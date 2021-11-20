@@ -53,3 +53,7 @@ Group () where
 public export
 {n : Nat} -> Group g => Group (g ^ n) where
   inverse = map inverse
+
+public export
+[trivial] Group g => Generate (g ^ 0) h where
+  [] <++> _ = []
